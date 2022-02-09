@@ -40,6 +40,8 @@ export default function Login() {
         password
       });
       setIsloading(false);
+      
+      console.log(response);
 
       login(response.data);
 

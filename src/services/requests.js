@@ -7,7 +7,9 @@ async function registerUser(body) {
 }
 
 async function signIn(body) {
-  await axios.post(`${BASE_URL}/sign-in`, body);
+  const auth = await axios.post(`${BASE_URL}/sign-in`, body);
+
+  return auth; 
 }
 
 const requests = {

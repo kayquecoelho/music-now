@@ -24,7 +24,7 @@ export default function Register() {
 
     try {
       await requests.registerUser({ ...formData });
-      navigate("/");
+      navigate("/sign-in");
     } catch (error) {
       alert(error.response?.data);
       setIsLoading(false);
