@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from 'react';
-import api from '../../services/api';
+import requests from '../../services/requests';
 
 export function Register() {
   const [formData, setFormData] = useState({
@@ -21,7 +21,7 @@ export function Register() {
     setDisableForm(true);
 
     try {
-      await api.registerUser({ ...formData });
+      await requests.registerUser({ ...formData });
       navigate("/");
     } catch (error) {
       alert(error.response?.data);

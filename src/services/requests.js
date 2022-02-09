@@ -1,12 +1,12 @@
 import axios from 'axios';
 
-const BASE_URL= process.env.REACT_APP_API_BASE_URL;
+const BASE_URL= "http://localhost:5000";
 
 async function registerUser(body) {
   await axios.post(`${BASE_URL}/sign-up`, body);
 }
-const api = {
+const requests = {
   registerUser
 };
 
-export default api;
+export default requests;
