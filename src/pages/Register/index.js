@@ -1,15 +1,17 @@
-import styled from 'styled-components';
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState } from 'react';
 import requests from '../../services/requests';
 
-export function Register() {
+import { Button, Container, Content, Form, Input, Hyperlink } from "../../components/Form";
+import Logo from "../../assets/img/logo.png";
+
+export default function Register() {
   const [formData, setFormData] = useState({
     name:"",
     email: "",
     password:""
   });
-  const [disableForm, setDisableForm] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   function handleChange({ target }) {
@@ -18,19 +20,22 @@ export function Register() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    setDisableForm(true);
+    setIsLoading(true);
 
     try {
       await requests.registerUser({ ...formData });
       navigate("/");
     } catch (error) {
       alert(error.response?.data);
-      setDisableForm(false);
+      setIsLoading(false);
     }
   }
+
   return (
-    <Container>
-      <Title>Music Now</Title>
+  <Container>
+    <Content>
+      <img alt="logo.png" src={Logo}/>
+
       <Form onSubmit={handleSubmit}>
         <Input 
           placeholder='Nome'
@@ -38,16 +43,16 @@ export function Register() {
           name="name" 
           value={formData.name} 
           onChange={handleChange}
-          disabled={disableForm}
+          stageloading={isLoading}
           required  
         />
         <Input 
-          placeholder='Email'
+          placeholder='E-mail'
           type="email"
           name="email" 
           value={formData.email} 
           onChange={handleChange}
-          disabled={disableForm}
+          stageloading={isLoading}
           required
         />
         <Input 
@@ -56,90 +61,23 @@ export function Register() {
           name="password" 
           value={formData.password} 
           onChange={handleChange}
-          disabled={disableForm}
+          stageloading={isLoading}
           required  
         />
-        <Button type="submit" disabled={disableForm}>Cadastrar-se</Button>
+
+        <Button type="submit" stageloading={isLoading}>
+          {isLoading ?
+            "Carregando..."
+          :
+            "Cadastrar-se"
+          }
+        </Button>
       </Form>
-      <StyledLink to="/" >
+
+      <Hyperlink to="/" stageloading={isLoading ? 1 : undefined}>
         Já tem uma conta? Entre agora!
-      </StyledLink>
-    </Container>
-  )
+      </Hyperlink>
+    </Content>
+  </Container>
+  );
 }
-
-const Title = styled.h1`
-  margin-top: 120px;
-  margin-bottom: 30px;
-
-  color: #FFFFFF;
-  font-family: 'Saira Stencil One', cursive;
-  font-size: 32px;
-  font-weight: 400;
-  line-height: 50px;
-`;
-const Input = styled.input`
-  width: 100%;
-  height: 58px;
-
-  background-color: #FFFFFF;
-  border-radius: 5px;
-  border: none;
-
-  padding: 20px;
-
-  color: #000000;
-  font-size: 20px;
-  font-weight: 400;
-  line-height: 23px;
-  letter-spacing: 0em;
-  text-align: left;
-
-  ::placeholder {
-    color: #000000;
-  }
-`;
-const Form = styled.form`
-  max-width: 780px;
-
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-`;
-const Button = styled.button`
-  width: 100%;
-  height: 46px;
-
-  background-color: #555555;
-  border-radius: 5px;
-  border: none;
-
-  margin-bottom: 20px;
-  ${(props) => props.disabled && "opacity: 0.7;"}
- 
-  color: #FFFFFF;
-  font-weight: bold;
-  font-size: 20px;
-  line-height: 23px;
-
-  cursor: pointer;
-`;
-
-const Container = styled.div`
-  width: 100%;
-  padding: 0 25px;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`;
-const StyledLink = styled(Link)`
-  color: #ffffff;
-  font-size: 15px;
-  font-weight: 700;
-  line-height: 18px;
-  text-decoration: none;
-
-  cursor: pointer;
-`;
