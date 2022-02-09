@@ -1,12 +1,16 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Home } from "./pages";
+import { Home, Login } from "./pages";
+import { AuthProvider } from "./contexts/AuthContext";
 
 export default function App() {
   return(
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />  
-      </Routes>
-    </BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/sign-in" element={<Login />} />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
