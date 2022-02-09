@@ -74,7 +74,7 @@ export default function Register() {
         </Button>
       </Form>
 
-      <Hyperlink to="/" stageloading={isLoading ? 1 : undefined}>
+      <Hyperlink to="/sign-in" stageloading={isLoading ? 1 : undefined}>
         Já tem uma conta? Entre agora!
       </Hyperlink>
     </Content>

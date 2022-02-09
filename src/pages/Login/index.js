@@ -30,37 +30,32 @@ export default function Login() {
     }
   }, [navigate]);
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
 
     setIsloading(true);
-    const promise = requests.signIn({
-      email,
-      password
-    });
-    setTimeout(() => {
-      promise.then((response) => {
-        setIsloading(false);
-
-        login(response.data);
-
-        Toast.fire({
-          icon: 'success',
-          title: 'Login realizado com sucesso'
-        })
-        navigate("/");
+    try {
+      const response = await requests.signIn({
+        email,
+        password
       });
-    }, 3000);
-    setTimeout(() => {
-      promise.catch(() => {
-        setIsloading(false);
+      setIsloading(false);
 
-        Toast.fire({
-          icon: 'error',
-          text: 'Não foi possível efetuar o login. Ocorreu um erro inesperado, tente novamente mais tarde!'
-        })
-      });
-    }, 3000);
+      login(response.data);
+
+      Toast.fire({
+        icon: 'success',
+        title: 'Login realizado com sucesso'
+      })
+      navigate("/");
+    } catch (error) {
+      setIsloading(false);
+
+      Toast.fire({
+        icon: 'error',
+        text: 'Não foi possível efetuar o login. Ocorreu um erro inesperado, tente novamente mais tarde!'
+      })
+    }
   }
 
   return(
