@@ -12,9 +12,16 @@ async function signIn(body) {
   return auth; 
 }
 
+async function getProducts() {
+  const products = await axios.get(`${BASE_URL}/products`);
+
+  return products;
+}
+
 const requests = {
   registerUser,
-  signIn
+  signIn,
+  getProducts
 };
 
 export default requests;
