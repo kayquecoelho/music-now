@@ -1,9 +1,6 @@
 import { Fragment, useEffect, useState } from "react";
 import requests from "../../services/requests";
 import Logo from "../../assets/img/logo.png";
-import Bag from "../../assets/icons/bag.png";
-import Profile from "../../assets/icons/profile.png";
-import Bars from "../../assets/icons/bars.png";
 import { 
   Container,
   Content,
@@ -15,7 +12,6 @@ import {
   DescriptionAmount,
   Hyperlink
 } from "../../components/ProductCard";
-import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import Swal from 'sweetalert2';
 
@@ -71,15 +67,7 @@ export default function Home() {
     <Fragment>
       <Container>
         <Content>
-          <Header>
-            <img alt="logo.png" src={Logo}/>
 
-            <div>
-              <img alt="logo.png" src={Bag}/>
-              <img alt="logo.png" src={Profile}/>
-              <img alt="logo.png" src={Bars}/>
-            </div>
-          </Header>
 
           <Banner>
             <img alt="logo.png" src={Logo} />
