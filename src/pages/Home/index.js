@@ -67,8 +67,6 @@ export default function Home() {
     <Fragment>
       <Container>
         <Content>
-
-
           <Banner>
             <img alt="logo.png" src={Logo} />
           </Banner>
