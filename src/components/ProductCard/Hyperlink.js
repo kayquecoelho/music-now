@@ -10,7 +10,6 @@ const Hyperlink = styled(Link)`
   justify-content: center;
 
   background-color: #706969;
-  border-radius: 5px;
 
   margin-top: 10px;
 
