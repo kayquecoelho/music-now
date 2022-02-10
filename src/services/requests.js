@@ -25,7 +25,7 @@ async function getArtists() {
 }
 
 async function getArtistProducts(id) {
-  const artistProducts = await axios.get(`${BASE_URL}/artists/${id}`);
+  const artistProducts = await axios.get(`${BASE_URL}/artist/${id}`);
 
   return artistProducts; 
 }

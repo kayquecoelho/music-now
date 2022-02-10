@@ -52,7 +52,7 @@ export default function Home() {
           <Description>
             <DescriptionName>{product.name}</DescriptionName>
             <DescriptionAmount>
-              {`POR R$ ${product.amount.toString().replace(".",",")}0`}
+              {`POR R$ ${product.amount.toString().replace(".",",")}`}
             </DescriptionAmount>
             <Hyperlink to={`/product/${product._id}`}>
               COMPRAR
