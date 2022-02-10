@@ -17,7 +17,7 @@ const Header = styled.div`
   background-color: #000000;
 
   img{
-    width: 150px;
+    width: 120px;
   }
 
   div{
@@ -26,7 +26,9 @@ const Header = styled.div`
     justify-content: center;
 
     img{
-      width: 35px;
+      width: 32px;
+
+      margin: 0 5px;
     }
   }
 `;

@@ -21,36 +21,28 @@ import Swal from 'sweetalert2';
 
 export default function Home() {
   const [products, setProducts] = useState(null);
-  const Toast = Swal.mixin({
-    toast: true,
-    position: 'top-end',
-    showConfirmButton: false,
-    timer: 3000,
-    timerProgressBar: true,
-    didOpen: (toast) => {
-      toast.addEventListener('mouseenter', Swal.stopTimer)
-      toast.addEventListener('mouseleave', Swal.resumeTimer)
-    }
-  })
 
   useEffect(() => {
-    async function handleProducts() {
-      try {
-        const response = await requests.getProducts();
-        setProducts(response.data);
-      } catch (error) {
-        Toast.fire({
-          icon: 'error',
-          text: 'Ocorreu um erro inesperado, tente novamente mais tarde!'
-        })
-      }
-    }
-
     handleProducts();
-  }, [Toast])
+  }, [])
 
   if(products === null){
     return "";
+  }
+
+  async function handleProducts() {
+    try {
+      const response = await requests.getProducts();
+      setProducts(response.data);
+    } catch (error) {
+      console.log(error)
+
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Ocorreu um erro inesperado, tente novamente!'
+      })
+    }
   }
 
   const productsReader = products.map((product) => {
