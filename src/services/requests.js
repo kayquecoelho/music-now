@@ -18,10 +18,24 @@ async function getProducts() {
   return products;
 }
 
+async function getArtists() {
+  const artists = await axios.get(`${BASE_URL}/artists`);
+
+  return artists; 
+}
+
+async function getArtistProducts(id) {
+  const artistProducts = await axios.get(`${BASE_URL}/artist/${id}`);
+
+  return artistProducts; 
+}
+
 const requests = {
   registerUser,
   signIn,
-  getProducts
+  getProducts,
+  getArtists,
+  getArtistProducts
 };
 
 export default requests;
