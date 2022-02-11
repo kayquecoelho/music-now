@@ -1,34 +1,24 @@
-import { Fragment, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { Banner, Container, Content } from "../../components/ProductCard";
 import requests from "../../services/requests";
 import Logo from "../../assets/img/logo.png";
-import { Container, Content, Banner } from "../../components/ProductCard";
 import Footer from "../../components/Footer";
 import ProductBox from "../ProductBox";
-import Swal from 'sweetalert2';
 
-export default function Home() {
+export default function Section(props) {
   const [products, setProducts] = useState(null);
 
   useEffect(() => {
-    handleProducts();
-  }, [])
+    requestProducts();
+  }, []);
 
-  if(!products){
-    return "";
-  }
-
-  async function handleProducts() {
+  async function requestProducts() {
     try {
-      const response = await requests.getProducts();
+      const response = await requests.getProducts(props.type);
       setProducts(response.data);
     } catch (error) {
-      console.log(error)
-
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Ocorreu um erro inesperado, tente novamente!'
-      })
+      console.log(error.response)
+      alert(error.response.data);
     }
   }
 
@@ -41,14 +31,12 @@ export default function Home() {
     );
   });
 
-  return(
-    <Fragment>
-      <Container>
-        <Content>
-          <Banner>
+  return (
+    <Container>
+      <Content>
+        <Banner>
             <img alt="logo.png" src={Logo} />
-          </Banner>
-
+        </Banner>
           <main>
             <div>
               <h2>Produtos</h2>
@@ -60,12 +48,11 @@ export default function Home() {
               {products && productsReader}
             </div>
           </main>
-
           <Footer>
             Copyright © Music Now 2022
           </Footer>
-        </Content>
-      </Container>
-    </Fragment>
+      </Content>
+    </Container>
   );
 }
+

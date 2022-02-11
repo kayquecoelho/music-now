@@ -12,9 +12,9 @@ async function signIn(body) {
   return auth; 
 }
 
-async function getProducts() {
-  const products = await axios.get(`${BASE_URL}/products`);
-
+async function getProducts(type) {
+  const products = await axios.get(`${BASE_URL}/products?${type && `type=${type}`}`);
+  
   return products;
 }
 

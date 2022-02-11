@@ -1,15 +1,15 @@
 import styled from "styled-components";
 
 const Content = styled.div`
-  height: 100%;
   width: 100%;
   
-  main{
+  main {
     padding: 0 30px;
 
     margin-bottom: 20px;
+    margin-bottom: 75px;
 
-    div{
+    div {
       width: 100%;
   
       margin-top: 20px;
@@ -19,18 +19,25 @@ const Content = styled.div`
       align-items: center;
       justify-content: center;
   
-      h2{
+      h2 {
         font-size: 22px;
         line-height: 26px;
       }
     
-      section{
+      section {
         width: 80px;
         height: 6px;
     
         background-color: #C4C4C4;
       }
     }
+  }
+
+  .products {
+    display: flex; 
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 25px;
   }
 `;
 

@@ -1,13 +1,14 @@
-import { Fragment, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Banner, Container, Content, Description, DescriptionAmount, DescriptionName, Hyperlink, Image, ProductCard } from "../../components/ProductCard";
+import { Banner, Container, Content } from "../../components/ProductCard";
 import requests from "../../services/requests";
 import Logo from "../../assets/img/logo.png";
+import Footer from "../../components/Footer";
+import ProductBox from "../ProductBox";
 
 export default function Artist() {
   const { id } = useParams();
   const [products, setProducts] = useState(null);
-  console.log(products)
 
   useEffect(() => {
     requestProducts();
@@ -24,31 +25,14 @@ export default function Artist() {
     }
   }
 
-  if (!products) {
-    return <h1>NADA FOI ENCONTRADO</h1>
-  }
-
-  const productsReader = products.products.map((product) => {
+  const productsReader = products?.map((product) => {
     return (
-      <Fragment key={product._id}>
-        <ProductCard>
-          <Image>
-            <img alt={product.name} src={product.image} />
-          </Image>
-
-          <Description>
-            <DescriptionName>{product.name}</DescriptionName>
-            <DescriptionAmount>
-              {`POR R$ ${product.amount.toString().replace(".",",")}`}
-            </DescriptionAmount>
-            <Hyperlink to={`/product/${product._id}`}>
-              COMPRAR
-            </Hyperlink>
-          </Description>
-        </ProductCard>
-      </Fragment>
+      <ProductBox
+        key={product._id}
+        {...product}
+      />
     );
-  })
+  });
 
   return (
     <Container>
@@ -56,8 +40,19 @@ export default function Artist() {
         <Banner>
             <img alt="logo.png" src={Logo} />
         </Banner>
+          <main>
+            <div>
+              <h2>Produtos</h2>
+              <section />
+            </div>
 
-        {productsReader}
+            <div className="products">
+              {productsReader}
+            </div>
+          </main>
+          <Footer>
+            Copyright © Music Now 2022
+          </Footer>
       </Content>
     </Container>
   );
