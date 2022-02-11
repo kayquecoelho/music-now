@@ -1,9 +1,9 @@
-import { Fragment, useEffect, useState } from "react";
-import { Banner, Container, Content, Description, DescriptionAmount, DescriptionName, Hyperlink, Image, ProductCard } from "../../components/ProductCard";
+import { useEffect, useState } from "react";
+import { Banner, Container, Content } from "../../components/ProductCard";
 import requests from "../../services/requests";
 import Logo from "../../assets/img/logo.png";
 import Footer from "../../components/Footer";
-import Swal from 'sweetalert2';
+import ProductBox from "../ProductBox";
 
 export default function Section(props) {
   const [products, setProducts] = useState(null);
@@ -24,25 +24,12 @@ export default function Section(props) {
 
   const productsReader = products?.map((product) => {
     return (
-      <Fragment key={product._id}>
-        <ProductCard>
-          <Image>
-            <img alt={product.name} src={product.image} />
-          </Image>
-
-          <Description>
-            <DescriptionName>{product.name}</DescriptionName>
-            <DescriptionAmount>
-              {`POR R$ ${product.amount.toString().replace(".",",")}`}
-            </DescriptionAmount>
-            <Hyperlink to={`/product/${product._id}`}>
-              COMPRAR
-            </Hyperlink>
-          </Description>
-        </ProductCard>
-      </Fragment>
+      <ProductBox
+        key={product._id}
+        {...product}
+      />
     );
-  })
+  });
 
   return (
     <Container>
@@ -57,7 +44,8 @@ export default function Section(props) {
             </div>
 
             <div className="products">
-              {productsReader}
+              {!products && "Não há produtos nesta seção"}
+              {products && productsReader}
             </div>
           </main>
           <Footer>
@@ -67,3 +55,4 @@ export default function Section(props) {
     </Container>
   );
 }
+

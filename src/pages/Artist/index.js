@@ -1,9 +1,10 @@
-import { Fragment, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Banner, Container, Content, Description, DescriptionAmount, DescriptionName, Hyperlink, Image, ProductCard } from "../../components/ProductCard";
+import { Banner, Container, Content } from "../../components/ProductCard";
 import requests from "../../services/requests";
 import Logo from "../../assets/img/logo.png";
 import Footer from "../../components/Footer";
+import ProductBox from "../ProductBox";
 
 export default function Artist() {
   const { id } = useParams();
@@ -24,27 +25,14 @@ export default function Artist() {
     }
   }
 
-  const productsReader = products?.products.map((product) => {
+  const productsReader = products?.map((product) => {
     return (
-      <Fragment key={product._id}>
-        <ProductCard>
-          <Image>
-            <img alt={product.name} src={product.image} />
-          </Image>
-
-          <Description>
-            <DescriptionName>{product.name}</DescriptionName>
-            <DescriptionAmount>
-              {`POR R$ ${product.amount.toString().replace(".",",")}`}
-            </DescriptionAmount>
-            <Hyperlink to={`/product/${product._id}`}>
-              COMPRAR
-            </Hyperlink>
-          </Description>
-        </ProductCard>
-      </Fragment>
+      <ProductBox
+        key={product._id}
+        {...product}
+      />
     );
-  })
+  });
 
   return (
     <Container>

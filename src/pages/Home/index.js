@@ -1,18 +1,9 @@
 import { Fragment, useEffect, useState } from "react";
 import requests from "../../services/requests";
 import Logo from "../../assets/img/logo.png";
-import { 
-  Container,
-  Content,
-  Banner,
-  ProductCard, 
-  Image, 
-  Description, 
-  DescriptionName, 
-  DescriptionAmount,
-  Hyperlink
-} from "../../components/ProductCard";
+import { Container, Content, Banner } from "../../components/ProductCard";
 import Footer from "../../components/Footer";
+import ProductBox from "../ProductBox";
 import Swal from 'sweetalert2';
 
 export default function Home() {
@@ -41,27 +32,14 @@ export default function Home() {
     }
   }
 
-  const productsReader = products.map((product) => {
-    return(
-      <Fragment key={product._id}>
-        <ProductCard>
-          <Image>
-            <img alt={product.name} src={product.image} />
-          </Image>
-
-          <Description>
-            <DescriptionName>{product.name}</DescriptionName>
-            <DescriptionAmount>
-              {`POR R$ ${product.amount.toString().replace(".",",")}`}
-            </DescriptionAmount>
-            <Hyperlink to={`/product/${product._id}`}>
-              COMPRAR
-            </Hyperlink>
-          </Description>
-        </ProductCard>
-      </Fragment>
+  const productsReader = products?.map((product) => {
+    return (
+      <ProductBox
+        key={product._id}
+        {...product}
+      />
     );
-  })
+  });
 
   return(
     <Fragment>
@@ -78,7 +56,8 @@ export default function Home() {
             </div>
 
             <div className="products">
-              {productsReader}
+              {!products && "Não há produtos nesta seção"}
+              {products && productsReader}
             </div>
           </main>
 

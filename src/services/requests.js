@@ -13,7 +13,6 @@ async function signIn(body) {
 }
 
 async function getProducts(type) {
-  console.log(type)
   const products = await axios.get(`${BASE_URL}/products?${type && `type=${type}`}`);
   
   return products;
