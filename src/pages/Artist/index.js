@@ -24,8 +24,7 @@ export default function Artist() {
     requestProducts();
   }, [id]);
 
-
-  const productsReader = products?.map((product) => {
+  const productsReader = products?.products.map((product) => {
     return (
       <ProductBox
         key={product._id}

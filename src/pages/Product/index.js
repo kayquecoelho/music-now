@@ -16,6 +16,7 @@ import {
   SizeComponent } from "../../components/Product";
 import Swal from 'sweetalert2';
 
+
 export default function Product() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -60,8 +61,8 @@ export default function Product() {
     setCounter(newCounter);
   }
 
-  function handleBag() {
-    if(localStorage.getItem("auth") === null){
+  function handleBag(product) {
+    if(!localStorage.getItem("auth")){
       Swal.fire({
         title: 'Você criou uma conta em nosso site?',
         text: 'Caso tenha uma conta, clique em "Entrar", caso contrário clique em "Cadastrar".',
@@ -80,13 +81,13 @@ export default function Product() {
           navigate("/sign-up");
         }
       })
-    }else{
+    } else {
       alert("Adicionar ao carrinho!");
       navigate("/");
     }
   }
 
-  if(product === null){
+  if(!product){
     return "";
   }
 
@@ -132,7 +133,7 @@ export default function Product() {
               <button onClick={() => handlePlusCounter(counter)}>+</button>
             </CounterContainer>
 
-            <Button onClick={handleBag}>
+            <Button onClick={() => handleBag(product)}>
               ADICIONAR AO <br />
               CARRINHO
             </Button>
@@ -140,6 +141,7 @@ export default function Product() {
 
           <Link to="/">Voltar</Link>
         </Content>
+        
       </Container>
     </Fragment>
   );
