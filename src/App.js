@@ -1,5 +1,12 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Home, Login, Register, NavigationBar, ArtistsSection, Artist } from "./pages";
+import { 
+  Home, 
+  Login, 
+  Register, 
+  NavigationBar, 
+  ArtistsSection, 
+  Artist,
+  Product } from "./pages";
 import { AuthProvider } from "./contexts/AuthContext";
 
 export default function App() {
@@ -13,6 +20,7 @@ export default function App() {
           <Route path="/sign-up" element={<Register />}/>
           <Route path="/artists" element={<ArtistsSection />}/>
           <Route path="/artist/:id" element={<Artist />}/>
+          <Route path="/product/:id" element={<Product />}/>
         </Routes>
       </BrowserRouter>
     </AuthProvider>

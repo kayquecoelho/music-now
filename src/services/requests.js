@@ -18,6 +18,12 @@ async function getProducts() {
   return products;
 }
 
+async function getProduct(id) {
+  const product = await axios.get(`${BASE_URL}/products/${id}`);
+
+  return product;
+}
+
 async function getArtists() {
   const artists = await axios.get(`${BASE_URL}/artists`);
 
@@ -34,6 +40,7 @@ const requests = {
   registerUser,
   signIn,
   getProducts,
+  getProduct,
   getArtists,
   getArtistProducts
 };

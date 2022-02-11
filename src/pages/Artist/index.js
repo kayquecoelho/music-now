@@ -10,19 +10,19 @@ export default function Artist() {
   console.log(products)
 
   useEffect(() => {
-    requestProducts();
-  }, []);
-
-  async function requestProducts() {
-    
-    try {
-      const response = await requests.getArtistProducts(id);
-      setProducts(response.data);
-    } catch (error) {
-      console.log(error.response)
-      alert(error.response.data);
+    async function requestProducts() {
+      try {
+        const response = await requests.getArtistProducts(id);
+        setProducts(response.data);
+      } catch (error) {
+        console.log(error.response)
+        alert(error.response.data);
+      }
     }
-  }
+
+    requestProducts();
+  }, [id]);
+
 
   if (!products) {
     return <h1>NADA FOI ENCONTRADO</h1>

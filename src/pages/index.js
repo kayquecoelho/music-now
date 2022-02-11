@@ -4,6 +4,7 @@ import Register from "./Register";
 import NavigationBar from "./NavigationBar";
 import ArtistsSection from "./ArtistsSection";
 import Artist from "./Artist";
+import Product from "./Product";
 
 export {
   Home,
@@ -11,5 +12,6 @@ export {
   Register,
   NavigationBar,
   ArtistsSection,
-  Artist
+  Artist,
+  Product
 }
