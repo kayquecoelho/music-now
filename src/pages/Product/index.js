@@ -82,6 +82,7 @@ export default function Product() {
       })
     }else{
       alert("Adicionar ao carrinho!");
+      navigate("/");
     }
   }
 
