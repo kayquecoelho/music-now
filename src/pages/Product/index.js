@@ -1,5 +1,6 @@
 import { Fragment, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 import requests from "../../services/requests";
 import {   
   Container,
@@ -18,10 +19,23 @@ import Swal from 'sweetalert2';
 
 export default function Product() {
   const { id } = useParams();
+  const { auth } = useAuth();
   const navigate = useNavigate();
   const [product, setProduct] = useState(null);
   const [counter, setCounter] = useState(1);
   const [sizeSelected, setSizeSelected] = useState(false);
+  const [selectedSize, setSelectedSize] = useState(null);
+  const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+  })
 
   useEffect(() => {
     async function handleProduct() {
@@ -29,7 +43,7 @@ export default function Product() {
         const response = await requests.getProduct(id);
         setProduct(response.data);
       } catch (error) {
-        console.log(error)
+        console.log(error);
   
         Swal.fire({
           icon: 'error',
@@ -61,6 +75,16 @@ export default function Product() {
   }
 
   function handleBag() {
+    if(productSizesReader.length !== 0 && selectedSize === null){
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'É necessário informar o tamanho para continuar, tente novamente!'
+      })
+
+      return;
+    }
+
     if(localStorage.getItem("auth") === null){
       Swal.fire({
         title: 'Você criou uma conta em nosso site?',
@@ -72,7 +96,7 @@ export default function Product() {
         confirmButtonText: 'Entrar',
         confirmButtonColor: '#3085d6',
         cancelButtonText: 'Cancelar',
-        denyButtonText: 'Cadastrar',
+        denyButtonText: 'Cadastrar'
       }).then((result) => {
         if (result.isConfirmed) {
           navigate("/sign-in");
@@ -81,8 +105,40 @@ export default function Product() {
         }
       })
     }else{
-      alert("Adicionar ao carrinho!");
+      delete product._id;
+
+      console.log(auth.token);
+      console.log({ 
+        ...product, 
+        size: productSizesReader.length === 0 ? "" : selectedSize, 
+        quantity: counter 
+      });
+
+      handleCart({ 
+        ...product, 
+        size: productSizesReader.length === 0 ? " " : selectedSize, 
+        quantity: counter 
+      }, auth.token);
+
+      Toast.fire({
+        icon: 'success',
+        title: 'Produto adicionado ao carrinho com sucesso!'
+      })
       navigate("/");
+    }
+  }
+
+  async function handleCart(body, token) {
+    try {
+      await requests.postCart(body, token);
+    } catch (error) {
+      console.log(error);
+
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Não foi possível adicionar o seu produto ao carrinho, tente novamente!'
+      })
     }
   }
 
@@ -96,6 +152,7 @@ export default function Product() {
         <SizeComponent 
           sizeSelected={sizeSelected}
           setSizeSelected={setSizeSelected}
+          setSelectedSize={setSelectedSize}
           size={size} 
         />
       </Fragment>
@@ -122,7 +179,7 @@ export default function Product() {
 
             <ProductAmount>
               {`POR: R$ ${product.amount.toString().replace(".",",")}`}
-              </ProductAmount>
+            </ProductAmount>
           </Description>
 
           <ActionSection>

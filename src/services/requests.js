@@ -2,6 +2,10 @@ import axios from 'axios';
 
 const BASE_URL= "http://localhost:5000";
 
+function createConfig(token) {
+  return { headers: { Authorization: `Bearer ${token}` } };
+}
+
 async function registerUser(body) {
   await axios.post(`${BASE_URL}/sign-up`, body);
 }
@@ -36,13 +40,20 @@ async function getArtistProducts(id) {
   return artistProducts; 
 }
 
+async function postCart(body, token) {
+  const config = createConfig(token);
+
+  await axios.post(`${BASE_URL}/cart`, body, config);
+}
+
 const requests = {
   registerUser,
   signIn,
   getProducts,
   getProduct,
   getArtists,
-  getArtistProducts
+  getArtistProducts,
+  postCart
 };
 
 export default requests;

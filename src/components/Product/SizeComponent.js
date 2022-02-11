@@ -12,9 +12,11 @@ export default function SizeComponent(props) {
     if(!backgorundSize){
       setBackgroundSize(true);
       props.setSizeSelected(true);
+      props.setSelectedSize(props.size);
     }else{
       setBackgroundSize(false);
       props.setSizeSelected(false);
+      props.setSelectedSize(null);
     }
   }
 
