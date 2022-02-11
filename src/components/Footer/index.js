@@ -14,6 +14,11 @@ const Footer = styled.footer`
   line-height: 14px;
 
   color: #FFFFFF;
+
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
 `;
 
 export default Footer;

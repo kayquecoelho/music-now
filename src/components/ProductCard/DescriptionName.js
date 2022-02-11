@@ -5,6 +5,8 @@ const DescriptionName = styled.p`
   text-align: center;
 
   color: #000000;
+  text-align: center;
+  margin-bottom: 7px;
 `;
 
 export default DescriptionName;

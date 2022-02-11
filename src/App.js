@@ -1,12 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { 
-  Home, 
-  Login, 
-  Register, 
-  NavigationBar, 
-  ArtistsSection, 
-  Artist,
-  Product } from "./pages";
+import { Home, Login, Register, NavigationBar, ArtistsSection, Artist, Section, Product } from "./pages";
 import { AuthProvider } from "./contexts/AuthContext";
 
 export default function App() {
@@ -21,6 +14,9 @@ export default function App() {
           <Route path="/artists" element={<ArtistsSection />}/>
           <Route path="/artist/:id" element={<Artist />}/>
           <Route path="/product/:id" element={<Product />}/>
+          <Route path="/cloths" element={<Section type="cloth" />}/>
+          <Route path="/album" element={<Section type="album" />}/>
+          <Route path="/acessory" element={<Section type="acessory" />}/>
         </Routes>
       </BrowserRouter>
     </AuthProvider>

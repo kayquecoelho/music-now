@@ -5,6 +5,8 @@ import NavigationBar from "./NavigationBar";
 import ArtistsSection from "./ArtistsSection";
 import Artist from "./Artist";
 import Product from "./Product";
+import Section from "./Section";
+import ProductBox from "./ProductBox";
 
 export {
   Home,
@@ -13,5 +15,7 @@ export {
   NavigationBar,
   ArtistsSection,
   Artist,
-  Product
+  Product,
+  Section,
+  ProductBox
 }
