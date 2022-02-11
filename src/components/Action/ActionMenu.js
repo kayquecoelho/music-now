@@ -17,6 +17,10 @@ export default function ActionMenu(props) {
           <p>Acessórios</p>
           <hr />
         </section>
+        <section>
+          <p>Álbum</p>
+          <hr />
+        </section>
       </div>
     </Fragment>
   );
