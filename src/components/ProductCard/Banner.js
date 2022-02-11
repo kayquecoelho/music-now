@@ -12,7 +12,7 @@ const Banner = styled.section`
 
   background-color: #C4C4C4;
 
-  img{
+  img {
     width: 200px;
   }
 `;

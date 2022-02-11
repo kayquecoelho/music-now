@@ -1,12 +1,11 @@
 import { Fragment, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import { Banner, Container, Content, Description, DescriptionAmount, DescriptionName, Hyperlink, Image, ProductCard } from "../../components/ProductCard";
 import requests from "../../services/requests";
 import Logo from "../../assets/img/logo.png";
 import Footer from "../../components/Footer";
+import Swal from 'sweetalert2';
 
-export default function Artist() {
-  const { id } = useParams();
+export default function Section(props) {
   const [products, setProducts] = useState(null);
 
   useEffect(() => {
@@ -14,9 +13,8 @@ export default function Artist() {
   }, []);
 
   async function requestProducts() {
-    
     try {
-      const response = await requests.getArtistProducts(id);
+      const response = await requests.getProducts(props.type);
       setProducts(response.data);
     } catch (error) {
       console.log(error.response)
@@ -24,7 +22,7 @@ export default function Artist() {
     }
   }
 
-  const productsReader = products?.products.map((product) => {
+  const productsReader = products?.map((product) => {
     return (
       <Fragment key={product._id}>
         <ProductCard>

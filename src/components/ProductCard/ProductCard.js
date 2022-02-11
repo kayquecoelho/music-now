@@ -6,10 +6,10 @@ const ProductCard = styled.div`
   align-items: center;
   justify-content: center;
 
-  width: 100%;
-  height: 200px;
+  max-width: 350px;
+  height: 350px;
 
-  margin: 30px 0;
+  margin: 20px 0;
 `;
 
 export default ProductCard;

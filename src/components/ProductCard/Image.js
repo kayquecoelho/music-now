@@ -1,10 +1,9 @@
 import styled from "styled-components";
 
 const Image = styled.div`
-  height: 109px;
-  width: 100%;
+  max-height: 200px;
 
-  img{
+  img {
     height: 100%;
     width: 100%;
   }

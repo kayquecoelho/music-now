@@ -22,7 +22,7 @@ export default function Home() {
     handleProducts();
   }, [])
 
-  if(products === null){
+  if(!products){
     return "";
   }
 
@@ -77,7 +77,7 @@ export default function Home() {
               <section />
             </div>
 
-            <div>
+            <div className="products">
               {productsReader}
             </div>
           </main>
