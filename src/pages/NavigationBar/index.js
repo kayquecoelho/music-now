@@ -1,14 +1,13 @@
-import { Fragment, useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Fragment, useState } from "react";
+import { useLocation } from "react-router-dom";
+
 import Logo from "../../assets/img/logo.png";
 import Bag from "../../assets/icons/bag.png";
 import Profile from "../../assets/icons/profile.png";
 import Bars from "../../assets/icons/bars.png";
 import { Header, Action } from "../../components/Header";
 import { ActionMenu, ActionProfile } from "../../components/Action";
-import styled from "styled-components";
-import requests from "../../services/requests";
-import useAuth from "../../hooks/useAuth";
+
 
 export default function NavigationBar({ setDisplayBag, displayBag}) {
   const { pathname } = useLocation();
@@ -17,12 +16,12 @@ export default function NavigationBar({ setDisplayBag, displayBag}) {
 
   function handleMenu() {
     setActionContent(<ActionMenu setVisibility={setVisibility} />);
-    setVisibility(!visibility);
+    setVisibility(true);
   }
 
   function handleProfile() {
     setActionContent(<ActionProfile setVisibility={setVisibility} />);
-    setVisibility(!visibility);
+    setVisibility(true);
   }
 
   function handleBag() {
@@ -56,201 +55,3 @@ export default function NavigationBar({ setDisplayBag, displayBag}) {
     </Fragment>
   );
 }
-
-export function BagComponent({ displayBag, setDisplayBag }){
-  const { auth } = useAuth();
-  const [products, setProducts] = useState(null);
-
-  function closeBag() {
-    setDisplayBag(false);
-  }
-
-  useEffect(() => {
-    request()
-  }, [displayBag]);
-
-  async function request() {
-    try {
-      const response = await requests.getCart(auth.token);
-      setProducts(response.data)
-    } catch (error) {
-      alert("THCAU")
-    }
-  }
-
-  return (
-    <BackgroundScreen onClick={closeBag} displayBag={displayBag}>
-      <Cart displayBag={displayBag} onClick={(e) => e.stopPropagation()}>
-        <div className="header">
-          <ButtonBag onClick={closeBag}>X</ButtonBag>
-          <BagTitle>Minha Sacola</BagTitle>
-        </div>
-
-        <Products>
-          {!products && "não há produtos"}
-          {products?.map((product) => <ProductBag key={product._id} {...product} />)}
-        </Products>
-        
-       
-        <CheckoutButton to="/checkout" onClick={closeBag}>Finalizar Compra</CheckoutButton>
-        
-      </Cart> 
-
-    </BackgroundScreen>
-  )
-}
-
-function ProductBag({ name, quantity, amount, image}) {
-  return (
-    <Box>
-      <img src={image} alt={name} />
-      <Info>
-        <Name>{name}</Name>
-        <Amount>POR R$ {amount.toString().replace(".",",")}</Amount>
-        <Counter>
-          <button className="remove">-</button>
-          <div className="display">{quantity}</div>
-          <button className="add">+</button>
-        </Counter>
-      </Info>
-    </Box>
-  )
-}
-const Name = styled.p`
-  color: #000000;
-  font-weight: bold;
-  font-size: 13px;
-  line-height: 15px;
-  word-break: break-word;
-`;
-const Amount = styled.p`
-  color: #000000;
-  font-weight: bold;
-  font-size: 13px;
-  line-height: 15px;
-  word-break: break-word;
-`;
-
-const Counter = styled.div`
-  display: flex;  
-  align-items: center;
-
-
-  .display {
-    width: 20px;
-    text-align: center;
-  }
-  .remove, .add {
-    width: 20px;
-    font-size: 13px;
-    font-weight: bold;
-    line-height: 15px;
-    color: #7a7a7a;
-
-    border: none;
-    cursor: pointer;
-  }
-`;
-const Info = styled.div`
-  margin-left: 10px;
-  word-break: break-word;
-
-  display: flex; 
-  flex-direction: column;
-  justify-content: space-between;
-`
-const Box = styled.div `
-  display: flex;
-
-  height: 110px;
-  margin-bottom: 20px;
-
-  img {
-    width: 110px;
-    height: 110px;
-  }
-`
-const Products = styled.div`
-  width: 100%;
-  margin-top: 15px;
-  word-break: break-word;
-
-  display: flex;
-  flex-direction: column;
-
-  margin-bottom: 100px;
-  overflow: scroll;
-  ::-webkit-scrollbar {
-    display: none;
-  }
-  -ms-overflow-style: none;  
-  scrollbar-width: none;  
-`
-const CheckoutButton = styled(Link)`
-  width: 242px;
-  height: 41px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  background-color: #706969;
-  border: none;
-  
-  position: absolute;
-  bottom: 20px;
-
-  font-weight: bold;
-  font-size: 12px;
-  line-height: 14px;
-  color: #F8F8F8;
-`
-const ButtonBag = styled.button`
-  width: 15px;
-  height: 20px;
-
-  margin-right: 10px;
-  
-  background-color: inherit;
-  border: none;
-`
-const BackgroundScreen = styled.div`
-  width: 100%;
-  height: 100%;
-
-  position: fixed;
-  z-index: 2;
-  top: 0;
-  left: 0;
-
-  background-color: rgba(0, 0, 0, 0.5);
-
-  display: ${(props) => props.displayBag ? "initial" : "none"};
-`;
-
-const Cart = styled.div`
-  width: 300px;
-  height: 100%;
-  background-color: #FFFFFF;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 15px;
-
-  position: absolute;
-  right: ${(props) => props.displayBag ? "0": "-300px"};
-  top: 0px;
-
-  .header {
-    width: 100%;
-    display: flex;
-  }
-`;
-
-const BagTitle = styled.div`
-  font-weight: bold;
-  font-size: 18px;
-  line-height: 21px;
-  color: #000000;
-`

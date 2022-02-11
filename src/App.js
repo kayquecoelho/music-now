@@ -1,8 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Home, Login, Register, NavigationBar, ArtistsSection, Artist, Section, Product } from "./pages";
 import { AuthProvider } from "./contexts/AuthContext";
-import { BagComponent } from "./pages/NavigationBar";
 import { useState } from "react";
+import { BagComponent } from "./pages/Bag";
 
 export default function App() {
   const [displayBag, setDisplayBag] = useState(false);
