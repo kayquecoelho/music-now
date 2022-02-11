@@ -46,6 +46,14 @@ async function postCart(body, token) {
   await axios.post(`${BASE_URL}/cart`, body, config);
 }
 
+async function getCart(token) {
+  const config = createConfig(token);
+
+  const products = await axios.get(`${BASE_URL}/cart`, config);
+
+  return products;
+}
+
 const requests = {
   registerUser,
   signIn,
@@ -53,7 +61,8 @@ const requests = {
   getProduct,
   getArtists,
   getArtistProducts,
-  postCart
+  postCart,
+  getCart
 };
 
 export default requests;

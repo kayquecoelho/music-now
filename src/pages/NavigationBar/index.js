@@ -1,5 +1,5 @@
-import { Fragment, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { Fragment, useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import Logo from "../../assets/img/logo.png";
 import Bag from "../../assets/icons/bag.png";
 import Profile from "../../assets/icons/profile.png";
@@ -7,6 +7,8 @@ import Bars from "../../assets/icons/bars.png";
 import { Header, Action } from "../../components/Header";
 import { ActionMenu, ActionProfile } from "../../components/Action";
 import styled from "styled-components";
+import requests from "../../services/requests";
+import useAuth from "../../hooks/useAuth";
 
 export default function NavigationBar({ setDisplayBag, displayBag}) {
   const { pathname } = useLocation();
@@ -15,12 +17,12 @@ export default function NavigationBar({ setDisplayBag, displayBag}) {
 
   function handleMenu() {
     setActionContent(<ActionMenu setVisibility={setVisibility} />);
-    setVisibility(true);
+    setVisibility(!visibility);
   }
 
   function handleProfile() {
     setActionContent(<ActionProfile setVisibility={setVisibility} />);
-    setVisibility(true);
+    setVisibility(!visibility);
   }
 
   function handleBag() {
@@ -56,9 +58,24 @@ export default function NavigationBar({ setDisplayBag, displayBag}) {
 }
 
 export function BagComponent({ displayBag, setDisplayBag }){
+  const { auth } = useAuth();
+  const [products, setProducts] = useState(null);
 
-  function closeBag(e) {
+  function closeBag() {
     setDisplayBag(false);
+  }
+
+  useEffect(() => {
+    request()
+  }, [displayBag]);
+
+  async function request() {
+    try {
+      const response = await requests.getCart(auth.token);
+      setProducts(response.data)
+    } catch (error) {
+      alert("THCAU")
+    }
   }
 
   return (
@@ -70,10 +87,13 @@ export function BagComponent({ displayBag, setDisplayBag }){
         </div>
 
         <Products>
-          <ProductBag></ProductBag>
+          {!products && "não há produtos"}
+          {products?.map((product) => <ProductBag key={product._id} {...product} />)}
         </Products>
         
-        <CheckoutButton>Finalizar Compra</CheckoutButton>
+       
+        <CheckoutButton to="/checkout" onClick={closeBag}>Finalizar Compra</CheckoutButton>
+        
       </Cart> 
 
     </BackgroundScreen>
@@ -83,20 +103,19 @@ export function BagComponent({ displayBag, setDisplayBag }){
 function ProductBag({ name, quantity, amount, image}) {
   return (
     <Box>
-      <img src="{image}" alt="{name}" />
+      <img src={image} alt={name} />
       <Info>
-        <Name>asei la</Name>
-        <Amount>POR R$ {/* quantity.toString().replace(".",",") */}</Amount>
+        <Name>{name}</Name>
+        <Amount>POR R$ {amount.toString().replace(".",",")}</Amount>
         <Counter>
           <button className="remove">-</button>
-          <div className="display">2</div>
+          <div className="display">{quantity}</div>
           <button className="add">+</button>
         </Counter>
       </Info>
     </Box>
   )
 }
-
 const Name = styled.p`
   color: #000000;
   font-weight: bold;
@@ -144,8 +163,7 @@ const Box = styled.div `
   display: flex;
 
   height: 110px;
-  background-color: purple;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 
   img {
     width: 110px;
@@ -160,11 +178,21 @@ const Products = styled.div`
   display: flex;
   flex-direction: column;
 
-  background-color: red;
+  margin-bottom: 100px;
+  overflow: scroll;
+  ::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;  
+  scrollbar-width: none;  
 `
-const CheckoutButton = styled.button`
+const CheckoutButton = styled(Link)`
   width: 242px;
   height: 41px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   background-color: #706969;
   border: none;

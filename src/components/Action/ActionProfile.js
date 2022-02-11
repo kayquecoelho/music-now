@@ -8,18 +8,27 @@ export default function ActionProfile(props) {
     localStorage.removeItem("auth");
     setIsAuth(localStorage.getItem("auth"));
   }
+
   return (
     <div>
       <span onClick={() => props.setVisibility(false)}>X</span>
-      <section>
-        <Hyperlink to="/sign-in">Entrar</Hyperlink>
-        <hr />
+      <section onClick={() => props.setVisibility(false)}>
+        {!isAuth && (
+          <>
+            <Hyperlink to="/sign-in">Entrar</Hyperlink>
+            <hr />
+          </>
+        )}
       </section>
-      <section>
-        <Hyperlink to="/sign-up">Cadastrar</Hyperlink>
-        <hr />
+      <section onClick={() => props.setVisibility(false)}>
+        {!isAuth && (
+          <>
+            <Hyperlink to="/sign-up">Cadastrar</Hyperlink>
+            <hr />
+          </>
+        )}
       </section>
-      <section>
+      <section onClick={() => props.setVisibility(false)}>
         {isAuth && (
         <>
           <p onClick={logout}>Sair</p>

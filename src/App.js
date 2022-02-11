@@ -22,6 +22,7 @@ export default function App() {
           <Route path="/cloths" element={<Section type="cloth" />}/>
           <Route path="/album" element={<Section type="album" />}/>
           <Route path="/acessory" element={<Section type="acessory" />}/>
+          <Route path="/checkout" element={<Section type="acessory" />}/>
         </Routes>
       </BrowserRouter>
     </AuthProvider>
