@@ -17,6 +17,7 @@ import {
   SizeComponent } from "../../components/Product";
 import Swal from 'sweetalert2';
 
+
 export default function Product() {
   const { id } = useParams();
   const { auth } = useAuth();
@@ -107,13 +108,6 @@ export default function Product() {
     }else{
       delete product._id;
 
-      console.log(auth.token);
-      console.log({ 
-        ...product, 
-        size: productSizesReader.length === 0 ? "" : selectedSize, 
-        quantity: counter 
-      });
-
       handleCart({ 
         ...product, 
         size: productSizesReader.length === 0 ? " " : selectedSize, 
@@ -189,7 +183,7 @@ export default function Product() {
               <button onClick={() => handlePlusCounter(counter)}>+</button>
             </CounterContainer>
 
-            <Button onClick={handleBag}>
+            <Button onClick={() => handleBag(product)}>
               ADICIONAR AO <br />
               CARRINHO
             </Button>
@@ -197,6 +191,7 @@ export default function Product() {
 
           <Link to="/">Voltar</Link>
         </Content>
+        
       </Container>
     </Fragment>
   );
