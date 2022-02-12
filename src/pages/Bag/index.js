@@ -8,6 +8,8 @@ import { BackgroundScreen, BagTitle, ButtonBag, Cart, CheckoutButton, Products }
 export function BagComponent({ displayBag, setDisplayBag }){
   const { auth } = useAuth();
   const [products, setProducts] = useState(null);
+  const [total, setTotal] = useState(0);
+  const [editQuantity, setEditQuantity] = useState(false);
 
   function closeBag() {
     setDisplayBag(false);
@@ -17,15 +19,18 @@ export function BagComponent({ displayBag, setDisplayBag }){
     async function getCartrequest() {
       try {
         const response = await requests.getCart(auth.token);
+        const value = calculateTotal(response.data);
+        setTotal(value);
         setProducts(response.data)
       } catch (error) {
         alert("Something went wrong! Try again later.")
       }
     }
-    getCartrequest();
-
-  }, [displayBag, auth?.token]);
-
+    if (auth) {
+      getCartrequest();
+    }
+  }, [displayBag, auth, editQuantity]);
+  
   return (
     <BackgroundScreen onClick={closeBag} displayBag={displayBag}>
       <Cart displayBag={displayBag} onClick={(e) => e.stopPropagation()}>
@@ -35,14 +40,38 @@ export function BagComponent({ displayBag, setDisplayBag }){
         </div>
 
         <Products>
-          {!products && "Não há produtos"}
-          {products?.map((product) => <ProductBox key={product.name} {...product} />)}
+          {!auth && "Você não está logado! Para começar a comprar, entre ou crie uma conta"}
+          {products?.length === 0 && "Não há produtos"}
+          {products?.map((product) => {
+            return (
+              <ProductBox 
+                key={product.name} 
+                {...product} 
+                setEditQuantity={setEditQuantity}
+                editQuantity={editQuantity}
+              />
+            )
+          })}
         </Products>
         
-        <CheckoutButton to="/checkout" onClick={closeBag}>
-          Finalizar Compra
-        </CheckoutButton>
+        <div className="finish">
+          <div className="subtotal"><span>SUBTOTAL: </span> {total.toString().replace(".", ",")}</div>
+          <CheckoutButton to="/checkout" onClick={closeBag}>
+            Finalizar Compra
+          </CheckoutButton>
+        </div>
       </Cart> 
     </BackgroundScreen>
   );
+}
+
+function calculateTotal(products) {
+  let total = 0;
+
+  for (let i = 0; i < products.length; i++){
+    const element = products[i];
+    total += element.amount * element.quantity
+  }
+
+  return total.toFixed(2);
 }

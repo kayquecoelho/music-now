@@ -27,9 +27,6 @@ const CheckoutButton = styled(Link)`
 
   background-color: #706969;
   border: none;
-  
-  position: absolute;
-  bottom: 20px;
 
   font-weight: bold;
   font-size: 12px;
@@ -57,6 +54,18 @@ const BackgroundScreen = styled.div`
   background-color: rgba(0, 0, 0, 0.5);
 
   display: ${(props) => props.displayBag ? "initial" : "none"};
+
+  .finish {
+    position: absolute;
+    bottom: 20px;
+
+    .subtotal {
+      margin-bottom: 5px;
+
+      display: flex;
+      justify-content: space-between;
+    }
+  }
 `;
 
 const Cart = styled.div`

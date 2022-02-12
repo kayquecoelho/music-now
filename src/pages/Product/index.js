@@ -106,8 +106,7 @@ export default function Product() {
         }
       })
     }else{
-      delete product._id;
-
+      
       handleCart({ 
         ...product, 
         size: productSizesReader.length === 0 ? " " : selectedSize, 
