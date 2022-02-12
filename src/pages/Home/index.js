@@ -1,10 +1,11 @@
 import { Fragment, useEffect, useState } from "react";
 import requests from "../../services/requests";
-import Logo from "../../assets/img/logo.png";
+import Swal from 'sweetalert2';
+
 import { Container, Content, Banner } from "../../components/ProductCard";
+import Logo from "../../assets/img/logo.png";
 import Footer from "../../components/Footer";
 import ProductBox from "../ProductBox";
-import Swal from 'sweetalert2';
 
 export default function Home() {
   const [products, setProducts] = useState(null);
@@ -21,8 +22,7 @@ export default function Home() {
     try {
       const response = await requests.getProducts();
       setProducts(response.data);
-    } catch (error) {
-      console.log(error)
+    } catch {
 
       Swal.fire({
         icon: 'error',

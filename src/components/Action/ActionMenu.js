@@ -1,24 +1,30 @@
 import { Fragment } from "react";
+import { Hyperlink } from "../Form";
 
 export default function ActionMenu(props) {
+
+  function changeVisibility() {
+    props.setVisibility(false);
+  }
+
   return(
     <Fragment>
       <div>
-        <span onClick={() => props.setVisibility(false)}>X</span>
-        <section>
-          <p>Artistas</p>
+        <span onClick={changeVisibility}>X</span>
+        <section onClick={changeVisibility}>
+          <Hyperlink to="/artists">Artitas</Hyperlink>
           <hr />
         </section>
-        <section>
-          <p>Roupas</p>
+        <section onClick={changeVisibility}>
+          <Hyperlink to="/cloths">Roupas</Hyperlink>
           <hr />
         </section>
-        <section>
-          <p>Acessórios</p>
+        <section onClick={changeVisibility}>
+          <Hyperlink to="/album">Album</Hyperlink>
           <hr />
         </section>
-        <section>
-          <p>Álbum</p>
+        <section onClick={changeVisibility}>
+          <Hyperlink to="/acessory">Acessórios</Hyperlink>
           <hr />
         </section>
       </div>

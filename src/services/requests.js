@@ -54,6 +54,18 @@ async function getCart(token) {
   return products;
 }
 
+async function deleteProduct(token, id) {
+  const config = createConfig(token);
+  await axios.delete(`${BASE_URL}/cart/${id}`, config)
+
+}
+
+async function editQuantity(token, id, body) {
+  const config = createConfig(token);
+  await axios.put(`${BASE_URL}/cart/${id}`, body, config)
+}
+
+
 const requests = {
   registerUser,
   signIn,
@@ -62,7 +74,9 @@ const requests = {
   getArtists,
   getArtistProducts,
   postCart,
-  getCart
+  getCart,
+  deleteProduct,
+  editQuantity
 };
 
 export default requests;

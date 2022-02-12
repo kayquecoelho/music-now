@@ -2,6 +2,8 @@ import { Fragment, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import requests from "../../services/requests";
+import Swal from 'sweetalert2';
+
 import {   
   Container,
   Content,
@@ -15,8 +17,6 @@ import {
   CounterContainer,
   SizeContainer,
   SizeComponent } from "../../components/Product";
-import Swal from 'sweetalert2';
-
 
 export default function Product() {
   const { id } = useParams();
@@ -26,9 +26,10 @@ export default function Product() {
   const [counter, setCounter] = useState(1);
   const [sizeSelected, setSizeSelected] = useState(false);
   const [selectedSize, setSelectedSize] = useState(null);
+  
   const Toast = Swal.mixin({
     toast: true,
-    position: 'top-end',
+    position: 'top-start',
     showConfirmButton: false,
     timer: 3000,
     timerProgressBar: true,
@@ -44,7 +45,6 @@ export default function Product() {
         const response = await requests.getProduct(id);
         setProduct(response.data);
       } catch (error) {
-        console.log(error);
   
         Swal.fire({
           icon: 'error',
@@ -105,7 +105,7 @@ export default function Product() {
           navigate("/sign-up");
         }
       })
-    }else{
+    } else {
       
       handleCart({ 
         ...product, 
@@ -124,9 +124,7 @@ export default function Product() {
   async function handleCart(body, token) {
     try {
       await requests.postCart(body, token);
-    } catch (error) {
-      console.log(error);
-
+    } catch {
       Swal.fire({
         icon: 'error',
         title: 'Oops...',

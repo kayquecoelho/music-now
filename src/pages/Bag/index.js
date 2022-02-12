@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import requests from "../../services/requests";
+import Swal from 'sweetalert2';
 
-import ProductBox from "./ProductBox";
 import { BackgroundScreen, BagTitle, ButtonBag, Cart, CheckoutButton, Products } from "./style";
+import Purchase from "./Purchase";
 
 export function BagComponent({ displayBag, setDisplayBag }){
   const { auth } = useAuth();
@@ -22,8 +23,13 @@ export function BagComponent({ displayBag, setDisplayBag }){
         const value = calculateTotal(response.data);
         setTotal(value);
         setProducts(response.data)
-      } catch (error) {
-        alert("Something went wrong! Try again later.")
+      } catch {
+        
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Ocorreu um erro inesperado, tente novamente!'
+        })
       }
     }
     if (auth) {
@@ -44,7 +50,7 @@ export function BagComponent({ displayBag, setDisplayBag }){
           {products?.length === 0 && "Não há produtos"}
           {products?.map((product) => {
             return (
-              <ProductBox 
+              <Purchase 
                 key={product.name} 
                 {...product} 
                 setEditQuantity={setEditQuantity}

@@ -7,6 +7,7 @@ const Name = styled.p`
   line-height: 15px;
   word-break: break-word;
 `;
+
 const Amount = styled.p`
   color: #000000;
   font-weight: bold;
@@ -35,6 +36,7 @@ const Counter = styled.div`
     cursor: pointer;
   }
 `;
+
 const Info = styled.div`
   margin-left: 10px;
   word-break: break-word;
@@ -43,6 +45,7 @@ const Info = styled.div`
   flex-direction: column;
   justify-content: space-between;
 `;
+
 const Box = styled.div `
   display: flex;
 
@@ -52,6 +55,21 @@ const Box = styled.div `
   img {
     width: 110px;
     height: 110px;
+  }
+
+  position: relative;
+
+  .deleteProduct {
+    cursor: pointer;
+
+    width: 20px;
+    background-color: inherit;
+    border: none;
+
+    font-size: 20px;
+    position: absolute;
+    bottom: 5px;
+    right: 10px;
   }
 `;
 

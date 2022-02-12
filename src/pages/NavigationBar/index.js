@@ -8,7 +8,6 @@ import Bars from "../../assets/icons/bars.png";
 import { Header, Action } from "../../components/Header";
 import { ActionMenu, ActionProfile } from "../../components/Action";
 
-
 export default function NavigationBar({ setDisplayBag, displayBag}) {
   const { pathname } = useLocation();
   const [visibility, setVisibility] = useState(false);

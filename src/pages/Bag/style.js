@@ -17,6 +17,7 @@ const Products = styled.div`
   -ms-overflow-style: none;  
   scrollbar-width: none;  
 `;
+
 const CheckoutButton = styled(Link)`
   width: 242px;
   height: 41px;
@@ -33,6 +34,7 @@ const CheckoutButton = styled(Link)`
   line-height: 14px;
   color: #F8F8F8;
 `;
+
 const ButtonBag = styled.button`
   width: 15px;
   height: 20px;
@@ -42,6 +44,7 @@ const ButtonBag = styled.button`
   background-color: inherit;
   border: none;
 `;
+
 const BackgroundScreen = styled.div`
   width: 100%;
   height: 100%;

@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Banner, Container, Content } from "../../components/ProductCard";
 import requests from "../../services/requests";
+import Swal from 'sweetalert2';
+
+import { Banner, Container, Content } from "../../components/ProductCard";
 import Logo from "../../assets/img/logo.png";
 import Footer from "../../components/Footer";
 import ProductBox from "../ProductBox";
@@ -16,8 +18,11 @@ export default function Artist() {
         const response = await requests.getArtistProducts(id);
         setProducts(response.data);
       } catch (error) {
-        console.log(error.response)
-        alert(error.response.data);
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Ocorreu um erro inesperado, tente novamente!'
+        })
       }
     }
 
