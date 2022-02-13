@@ -56,15 +56,21 @@ async function getCart(token) {
 
 async function deleteProduct(token, id) {
   const config = createConfig(token);
-  await axios.delete(`${BASE_URL}/cart/${id}`, config)
 
+  await axios.delete(`${BASE_URL}/cart/${id}`, config);
 }
 
 async function editQuantity(token, id, body) {
   const config = createConfig(token);
-  await axios.put(`${BASE_URL}/cart/${id}`, body, config)
+
+  await axios.put(`${BASE_URL}/cart/${id}`, body, config);
 }
 
+async function postCheckout(token, body) {
+  const config = createConfig(token);
+
+  await axios.post(`${BASE_URL}/checkout`, body, config);
+}
 
 const requests = {
   registerUser,
@@ -76,7 +82,8 @@ const requests = {
   postCart,
   getCart,
   deleteProduct,
-  editQuantity
+  editQuantity,
+  postCheckout
 };
 
 export default requests;

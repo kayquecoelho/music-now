@@ -7,6 +7,7 @@ import Artist from "./Artist";
 import Product from "./Product";
 import Section from "./Section";
 import ProductBox from "./ProductBox";
+import Checkout from "./Checkout";
 
 export {
   Home,
@@ -17,5 +18,6 @@ export {
   Artist,
   Product,
   Section,
-  ProductBox
+  ProductBox,
+  Checkout
 }
