@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import useAuth from "../../hooks/useAuth";
 import requests from "../../services/requests";
 import Swal from 'sweetalert2';
@@ -8,6 +9,7 @@ import Purchase from "./Purchase";
 
 export function BagComponent({ displayBag, setDisplayBag }){
   const { auth } = useAuth();
+  const navigate = useNavigate();
   const [products, setProducts] = useState(null);
   const [total, setTotal] = useState(0);
   const [editQuantity, setEditQuantity] = useState(false);
@@ -23,20 +25,37 @@ export function BagComponent({ displayBag, setDisplayBag }){
         const value = calculateTotal(response.data);
         setTotal(value);
         setProducts(response.data)
-      } catch {
-        
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'Ocorreu um erro inesperado, tente novamente!'
-        })
+      } catch(error) {
+        if(error.response.status === 401){
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Sua sessão expirou, faça login novamente!',
+            confirmButtonText: 'OK'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              localStorage.removeItem("auth");
+              navigate("/");
+              window.location.reload(true);
+            }
+          })
+        }else{
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Ocorreu um erro inesperado, tente novamente!'
+          })
+        }
       }
     }
     if (auth) {
       getCartrequest();
     }
-  }, [displayBag, auth, editQuantity]);
-  
+  }, [displayBag, auth, editQuantity, navigate]);
+
+  console.log(products);
+  console.log(localStorage.getItem("auth"));
+
   return (
     <BackgroundScreen onClick={closeBag} displayBag={displayBag}>
       <Cart displayBag={displayBag} onClick={(e) => e.stopPropagation()}>
@@ -61,10 +80,17 @@ export function BagComponent({ displayBag, setDisplayBag }){
         </Products>
         
         <div className="finish">
-          <div className="subtotal"><span>SUBTOTAL: </span> {total.toString().replace(".", ",")}</div>
-          <CheckoutButton to="/checkout" onClick={closeBag}>
-            Finalizar Compra
-          </CheckoutButton>
+          
+          {
+            localStorage.getItem("auth") !== null && 
+              products?.length !== 0 &&
+                <Fragment>
+                  <div className="subtotal"><span>SUBTOTAL: </span> {total.toString().replace(".", ",")}</div>
+                  <CheckoutButton to="/checkout" onClick={closeBag}>
+                    FINALIZAR COMPRA
+                  </CheckoutButton>
+                </Fragment>
+          }
         </div>
       </Cart> 
     </BackgroundScreen>
