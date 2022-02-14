@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL= "http://localhost:5000";
+const BASE_URL= process.env.REACT_APP_API_BASE_URL;
 
 function createConfig(token) {
   return { headers: { Authorization: `Bearer ${token}` } };
@@ -17,7 +17,12 @@ async function signIn(body) {
 }
 
 async function getProducts(type) {
-  const products = await axios.get(`${BASE_URL}/products?${type && `type=${type}`}`);
+  let products;
+  if (type) {
+    products = await axios.get(`${BASE_URL}/products?${type && `type=${type}`}`);
+  } else {
+    products = await axios.get(`${BASE_URL}/products`);
+  }
   
   return products;
 }
