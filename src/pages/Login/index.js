@@ -1,10 +1,11 @@
-import { Fragment, useState, useEffect } from "react";
+import { Fragment, useState, useEffect, useRef } from "react";
 import { useNavigate } from 'react-router-dom';
 import useAuth from "../../hooks/useAuth";
 import requests from "../../services/requests";
+import Swal from 'sweetalert2';
+
 import Logo from "../../assets/img/logo.png";
 import { Button, Container, Content, Form, Input, Hyperlink } from "../../components/Form";
-import Swal from 'sweetalert2';
 
 export default function Login() {
   const { login } = useAuth();
@@ -12,6 +13,8 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsloading] = useState(false);
+  const inputPassword = useRef(null);
+  const inputEmail = useRef(null);
   const Toast = Swal.mixin({
     toast: true,
     position: 'top-end',
@@ -40,8 +43,6 @@ export default function Login() {
         password
       });
       setIsloading(false);
-      
-      console.log(response);
 
       login(response.data);
 
@@ -52,11 +53,21 @@ export default function Login() {
       navigate("/");
     } catch (error) {
       setIsloading(false);
+      if (error.response.status === 401) {
+        Toast.fire({
+          icon: 'error',
+          text: 'Confira seu e-mail e senha!'
+        });
+        inputEmail.current.focus();
+        inputEmail.current.style.backgroundColor = "rgba(238, 156, 166, 0.8)";
+        inputPassword.current.style.backgroundColor = "rgba(238, 156, 166, 0.8)";
+      } else {
 
-      Toast.fire({
-        icon: 'error',
-        text: 'Não foi possível efetuar o login. Ocorreu um erro inesperado, tente novamente mais tarde!'
-      })
+        Toast.fire({
+          icon: 'error',
+          text: 'Não foi possível efetuar o login. Ocorreu um erro inesperado, tente novamente mais tarde!'
+        })
+      }
     }
   }
 
@@ -68,6 +79,7 @@ export default function Login() {
 
           <Form onSubmit={handleSubmit}>
             <Input 
+              ref={inputEmail}
               type="email"
               placeholder="E-mail"
               onChange={(e) => setEmail(e.target.value)}
@@ -76,6 +88,7 @@ export default function Login() {
               required
             />
             <Input
+              ref={inputPassword}
               type="password"
               placeholder="Senha"
               onChange={(e) => setPassword(e.target.value)}

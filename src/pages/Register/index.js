@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import requests from '../../services/requests';
 import Swal from "sweetalert2";
 
@@ -10,16 +10,19 @@ export default function Register() {
   const [formData, setFormData] = useState({
     name:"",
     email: "",
-    password:""
+    password:"",
+    confirmPassword:""
   });
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const inputConfirm = useRef(null);
+  const inputEmail = useRef(null);
 
   const Toast = Swal.mixin({
     toast: true,
     position: 'top-start',
     showConfirmButton: false,
-    timer: 3000,
+    timer: 1500,
     timerProgressBar: true,
     didOpen: (toast) => {
       toast.addEventListener('mouseenter', Swal.stopTimer)
@@ -32,30 +35,49 @@ export default function Register() {
   }
 
   async function handleSubmit(e) {
+    inputConfirm.current.style.backgroundColor = "#FFFFFF";
+    inputEmail.current.style.backgroundColor = "#FFFFFF";
+
     e.preventDefault();
+    
+    if (formData.password !== formData.confirmPassword) {
+      Toast.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: "As senhas devem coincidir"
+      })
+      inputConfirm.current.focus();
+      inputConfirm.current.style.backgroundColor = "rgba(238, 156, 166, 0.8)";
+      return;
+    }
+
     setIsLoading(true);
 
+    const data = { ...formData };
+    delete data.confirmPassword;
+
     try {
-      await requests.registerUser({ ...formData });
+      await requests.registerUser(data);
       Toast.fire({
         icon: 'success',
         title: 'Cadastro realizado com sucesso!'
       })
       navigate("/sign-in");
     } catch (error) {
-
       if (error.response?.status === 409) {
         Toast.fire({
           icon: 'error',
           title: 'Oops...',
           text: "Já existe um usuário cadastrado com esse email!"
-        })
+        });
+        inputEmail.current.focus();
+        inputEmail.current.style.backgroundColor = "rgba(238, 156, 166, 0.8)";
       } else {
         Toast.fire({
           icon: 'error',
           title: 'Erro desconhecido',
           text: 'Tente novamente mais tarde!'
-        })
+        });
       }
       setIsLoading(false);
     }
@@ -77,6 +99,7 @@ export default function Register() {
           required  
         />
         <Input 
+          ref={inputEmail}
           placeholder='E-mail'
           type="email"
           name="email" 
@@ -90,6 +113,16 @@ export default function Register() {
           type="password"
           name="password" 
           value={formData.password} 
+          onChange={handleChange}
+          stageloading={isLoading}
+          required  
+        />
+        <Input 
+          ref={inputConfirm}
+          placeholder='Confirme a senha'
+          type="password"
+          name="confirmPassword" 
+          value={formData.confirmPassword} 
           onChange={handleChange}
           stageloading={isLoading}
           required  
