@@ -45,17 +45,31 @@ export default function Product() {
         const response = await requests.getProduct(id);
         setProduct(response.data);
       } catch (error) {
-  
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'Ocorreu um erro inesperado, tente novamente!'
-        })
+        if(error.response.status === 401){
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Sua sessão expirou, faça login novamente!',
+            confirmButtonText: 'OK'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              localStorage.removeItem("auth");
+              navigate("/");
+              window.location.reload(true);
+            }
+          })
+        }else{
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Ocorreu um erro inesperado, tente novamente!'
+          })
+        }
       }
     }
 
     handleProduct();
-  }, [id]);
+  }, [id, navigate]);
 
   function handleMinusCounter(counter) {
     let newCounter = counter - 1;
