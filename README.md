@@ -1,70 +1,88 @@
-# Getting Started with Create React App
+# Music Now
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Music now it's an e-commerce project that offers you the best products from your favorite artists. 
 
-## Available Scripts
+Try it out now: <a href="music-now.vercel.app">music-now.vercel.app</a>
 
-In the project directory, you can run:
+<br>
 
-### `npm start`
+# About
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+It's a web application that simulates an e-commerce. We offer you the opportunity to buy the merch from your favorite artists with the best experience.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Features:
 
-### `npm test`
+- [X] Create an account to save your favorite products in the bag
+- [X] Edit the amount of itens in the bag
+- [X] Shows the total purchase amount
+- [X] Delete any product from the bag
+- [X] Purchase confirmation by email
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Coming soon:
 
-### `npm run build`
+- [] Improvements in the layout of the page
+- [] Product search bar
+- [] Purchases historic
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# Technologies
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+The following tools and frameworks were used to create the app
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+<p align="center">
+<img src ="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white"/>
+<img src="https://img.shields.io/badge/css3%20-%231572B6.svg?&style=for-the-badge&logo=css3&logoColor=white"/>
+<img src="https://img.shields.io/badge/javascript%20-%23323330.svg?&style=for-the-badge&logo=javascript&logoColor=%23F7DF1E"/>
+<img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB"/>
+<p>
 
-### `npm run eject`
+# How to run
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+1. Clone this repository
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+2. <a href="https://github.com/tieskay/api-music-now"> Clone the API repository </a>
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+3. Create a .env file in the root
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+4. Define the REACT_APP_API_BASE_URL environment variable in the .env file
+```bash
+REACT_APP_API_BASE_URL=http://localhost:5000
+```
+2. Install dependecies with npm
 
-## Learn More
+```bash
+npm install
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+3. Run the app
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```bash
+npm run start
+```
 
-### Code Splitting
+4. You might want to build the app
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```bash
+npm run build
+```
 
-### Analyzing the Bundle Size
+5. Acess the link http://localhost:3000/
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+<br>
 
-### Making a Progressive Web App
+Note: Make sure to run the API app before run the application
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+# Authors
 
-### Advanced Configuration
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+<div>
 
-### Deployment
+<img src="https://avatars.githubusercontent.com/u/92492921?s=400&u=f0baf8cb4b2f009c2dac4377814681991f37d51b&v=4" width="100px;" style="border-radius: 50%; margin-right:15px;" />
+<a href="https://github.com/ruineto-dev">
+<img src="https://avatars.githubusercontent.com/u/93615202?v=4" width="100px;" style="border-radius: 50%;"/> </a>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+</div>
 
-### `npm run build` fails to minify
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+<br>
+
+Made by: Kayque Coelho and Rui Neto
